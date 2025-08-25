@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Push Notification Example</title>
+</head>
+<body>
+  <h2>Push Notification Demo</h2>
+  <button id="notifyBtn">Send Notification</button>
+
+  <script>
+    // Request notification permission on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === "denied") {
+            alert("❌ You have blocked notifications. Please allow them in browser settings.");
+          }
+        });
+      } else {
+        alert("⚠️ This browser does not support notifications.");
+      }
+    });
+
+    // Trigger notification on button click
+    document.getElementById("notifyBtn").addEventListener("click", () => {
+      if (!("Notification" in window)) {
+        alert("⚠️ This browser does not support notifications.");
+        return;
+      }
+
+      if (Notification.permission === "granted") {
+        new Notification("Hello! 🚀", {
+          body: "This is your push notification with extras.",
+          icon: "https://cdn-icons-png.flaticon.com/512/727/727399.png",  // small icon
+          badge: "https://cdn-icons-png.flaticon.com/512/1827/1827504.png", // monochrome badge
+          image: "https://picsum.photos/400/200",  // large preview image
+          // ⚠️ Note: `sound` is not widely supported in browser notifications
+          sound: "https://www.myinstants.com/media/sounds/notification.mp3"
+        });
+      } else if (Notification.permission === "denied") {
+        alert("❌ Notifications are blocked. Please enable them in your browser settings.");
+      } else {
+        // Ask again if not decided
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification("Thank you!", {
+              body: "You have enabled notifications 🎉",
+              icon: "https://cdn-icons-png.flaticon.com/512/727/727399.png",
+              image: "https://picsum.photos/400/200"
+            });
+          } else {
+            alert("❌ Please allow notifications to receive updates.");
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
