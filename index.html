@@ -26,9 +26,10 @@
           if (permission === "granted") {
             navigator.serviceWorker.ready.then(reg => {
               reg.showNotification("Hello from PWA 🚀", {
-                body: "This is a test notification.",
-                icon: "icons/icon-192.png",
-                badge: "icons/badge-72.png"
+                body: "This is a mobile-friendly notification.",
+                icon: "https://cdn-icons-png.flaticon.com/512/727/727399.png",
+                image: "https://picsum.photos/400/200",
+                badge: "https://cdn-icons-png.flaticon.com/512/1827/1827504.png"
               });
             });
           } else {
